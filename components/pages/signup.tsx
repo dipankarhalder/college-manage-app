@@ -142,14 +142,14 @@ export const SignupComponent = () => {
             >
               Yes, I understand and agree to the SpringWorks&nbsp;
               <Link
-                className="font-medium underline hover:text-indigo-700"
+                className="font-medium underline hover:text-sky-700"
                 href={auth_router.login_page}
               >
                 Terms of Service
               </Link>
               , including the&nbsp;
               <Link
-                className="font-medium underline hover:text-indigo-700"
+                className="font-medium underline hover:text-sky-700"
                 href={auth_router.login_page}
               >
                 User Agreement & Privacy Policy
@@ -158,7 +158,7 @@ export const SignupComponent = () => {
             </label>
           </div>
         </div>
-        <Button className="w-full h-11" type="submit">
+        <Button className="w-full h-11 bg-sky-600 h-11 hover:bg-sky-700" type="submit">
           Register
         </Button>
       </form>

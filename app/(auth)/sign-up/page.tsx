@@ -22,7 +22,7 @@ export default function SignupPage() {
           If you have already account. &nbsp;
           <Link
             href={auth_router.login_page}
-            className="font-medium underline hover:text-indigo-700"
+            className="font-medium underline hover:text-sky-700"
           >
             Sign in now
           </Link>

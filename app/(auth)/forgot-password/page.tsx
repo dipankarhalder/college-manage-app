@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
         <p>
           <Link
             href={auth_router.login_page}
-            className="font-medium underline hover:text-blue-700"
+            className="font-medium underline hover:text-sky-700"
           >
             Back to login
           </Link>
