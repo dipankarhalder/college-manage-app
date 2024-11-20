@@ -6,6 +6,10 @@ export type IChildren = {
 
 
 // UI Interfaces
+export interface UserSigninInfo {
+  email: string;
+  password: string;
+}
 export interface UserFormInfo {
   first_name: string;
   last_name: string;
