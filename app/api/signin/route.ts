@@ -12,7 +12,7 @@ if (!JWT_SECRET) {
   throw new Error("Please define the JWT_SECRET environment variable");
 };
 
-/* Super User Registration */
+/* Super User login */
 export async function POST(req: Request) {
   try {
     /* call or caching database connection */
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          message: `${email} is not associated with any account, Please enter correct email.`
+          message: `Email ${email} is not associated with any account, Please enter correct email.`
         },
         { status: 400 }
       );
@@ -64,7 +64,6 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error fetching users:", error);
     return NextResponse.json(
       {
         success: false,

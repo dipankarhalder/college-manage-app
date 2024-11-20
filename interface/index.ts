@@ -5,6 +5,16 @@ export type IChildren = {
 };
 
 
+// UI Interfaces
+export interface UserFormInfo {
+  first_name: string;
+  last_name: string;
+  role: string;
+  email: string;
+  phone: string;
+  password: string;
+}
+
 // API Interfaces
 
 /* Super User Interface */

@@ -10,10 +10,10 @@ export const SigninSchema = z.object({
 });
 
 export const SignupSchema = z.object({
-  firstName: z.string().min(2, {
+  first_name: z.string().min(2, {
     message: "First name must be at least 2 characters.",
   }),
-  lastName: z.string().min(2, {
+  last_name: z.string().min(2, {
     message: "Last name must be at least 2 characters.",
   }),
   email: z.string().email({
