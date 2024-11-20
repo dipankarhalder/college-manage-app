@@ -3,13 +3,8 @@ import { NextResponse } from "next/server";
 
 import { dbConnect } from "@/config/db";
 import { UserRequestBody } from "@/interface";
+import { user_role } from "@/config/constant";
 import Users from "@/models/Users";
-
-/* 
-  * All the user role 
-  -----------------------------
-  role === 'SUPER' || 'FACULTY' || 'STAFF' || 'STUDENT' 
-*/
 
 /* Super User Registration */
 export async function POST(req: Request) {
@@ -22,7 +17,7 @@ export async function POST(req: Request) {
     const { first_name, last_name, email, phone, role, password } = body;
 
     /* validate the user role */
-    if (role !== 'SUPER') {
+    if (role !== user_role.super) {
       return NextResponse.json(
         {
           success: false,
@@ -38,7 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          message: `${email} already associated with another user.`
+          message: `Email ${email} already associated with another user.`
         },
         { status: 400 }
       );
@@ -50,7 +45,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          message: `${phone} already associated with another user.`
+          message: `Phone no. ${phone} already associated with another user.`
         },
         { status: 400 }
       );
@@ -78,13 +73,12 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: true,
-        data: userIdCreate,
+        user_id: userIdCreate,
         message: `User successfully created.`
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error fetching users:", error);
     return NextResponse.json(
       {
         success: false,
