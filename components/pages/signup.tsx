@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -13,9 +14,12 @@ import { UserFormInfo } from "@/interface";
 import { SignupSchema } from "@/validate";
 import { user_role } from "@/config/constant";
 import { super_admin_signup } from "@/services/auth";
+import { SpinnerLoading } from "@/components/shared/spinner";
 
 export const SignupComponent = () => {
   const { toast } = useToast();
+  const [waiting, setWaiting] = useState(false);
+
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
@@ -28,6 +32,7 @@ export const SignupComponent = () => {
   });
 
   const onSubmit = (data: z.infer<typeof SignupSchema>) => {
+    setWaiting(true);
     const payload: UserFormInfo = {
       ...data,
       role: user_role.super,
@@ -43,6 +48,7 @@ export const SignupComponent = () => {
             toast({ title: res.message });
           }
         }
+        setWaiting(false);
       })
       .catch(err => console.log(err));
   };
@@ -141,9 +147,16 @@ export const SignupComponent = () => {
             )}
           />
         </div>
-        <Button className="w-full h-11 bg-sky-600 h-11 hover:bg-sky-700" type="submit">
-          Register
-        </Button>
+        {waiting ? (
+          <Button className="w-full bg-gray-600 h-11">
+            <SpinnerLoading />
+            Please wait...
+          </Button>
+        ) : (
+          <Button className="w-full h-11 bg-sky-600 h-11 hover:bg-sky-700" type="submit">
+            Register
+          </Button>
+        )}
       </form>
     </Form>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,12 +12,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast"
 
-import { auth_router, admin_router } from "@/router";
+import { UserSigninInfo } from "@/interface";
+import { auth_router } from "@/router";
 import { SigninSchema } from "@/validate";
+import { super_admin_signin } from "@/services/auth";
+import { SpinnerLoading } from "@/components/shared/spinner";
 
 export const SigninComponent = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const [waiting, setWaiting] = useState(false);
 
   const form = useForm<z.infer<typeof SigninSchema>>({
     resolver: zodResolver(SigninSchema),
@@ -27,16 +32,23 @@ export const SigninComponent = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof SigninSchema>) => {
-    if (data) {
-      console.log(data);
-      router.push(admin_router.dashboard);
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Opps! Something went wrong.",
-        description: "The email or password you entered is incorrect.",
-      });
+    setWaiting(true);
+    const payload: UserSigninInfo = {
+      ...data,
     }
+    
+    super_admin_signin(payload)
+      .then(res => {
+        if (res) {
+          if (!res.success) {
+            toast({ variant: "destructive", title: res.message });
+          } else {
+            console.log(res);
+          }
+        }
+        setWaiting(false);
+      })
+      .catch(err => console.log(err));
   };
 
   return (
@@ -89,9 +101,16 @@ export const SigninComponent = () => {
             </Link>
           </p>
         </div>
-        <Button className="w-full bg-sky-600 h-11 hover:bg-sky-700" type="submit">
-          Login
-        </Button>
+        {waiting ? (
+          <Button className="w-full bg-gray-600 h-11">
+            <SpinnerLoading />
+            Please wait...
+          </Button>
+        ) : (
+          <Button className="w-full bg-sky-600 h-11 hover:bg-sky-700" type="submit">
+            Login
+          </Button>
+        )}
       </form>
     </Form>
   );
