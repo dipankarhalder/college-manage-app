@@ -50,7 +50,7 @@ export const ForgotPasswordComponent = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full h-11" type="submit">
+        <Button className="w-full h-11 bg-sky-600 h-11 hover:bg-sky-700" type="submit">
           Request reset link
         </Button>
       </form>

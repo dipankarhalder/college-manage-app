@@ -83,13 +83,13 @@ export const SigninComponent = () => {
           <p>
             <Link
               href={auth_router.forgot_page}
-              className="font-medium text-xs underline hover:text-blue-700"
+              className="font-medium text-xs underline hover:text-sky-700"
             >
               Forgot Password?
             </Link>
           </p>
         </div>
-        <Button className="w-full bg-indigo-600 h-11 hover:bg-indigo-700" type="submit">
+        <Button className="w-full bg-sky-600 h-11 hover:bg-sky-700" type="submit">
           Login
         </Button>
       </form>
